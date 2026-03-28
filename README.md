@@ -1,9 +1,5 @@
 # AI-Powered Cyber Threat Intelligence: From Raw Reports to Adversary Emulation
 
-> **Course Level:** Intermediate — Cyber Threat Intelligence & Red Team Operations  
-> **Duration:** ~3 Hours (1hr Theory + 2hrs Hands-On)  
-> **Target Audience:** CTI Analysts, Red Teamers, Security Engineers, Graduate Students
-
 ---
 
 ## 📋 Table of Contents
