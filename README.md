@@ -7,18 +7,18 @@
 1. [Course Introduction](#1-course-introduction)
 2. [Learning Objectives](#2-learning-objectives)
 3. [Why AI Agents for Threat Intelligence?](#3-why-ai-agents-for-threat-intelligence)
-4. [Understanding AI Agents — Core Concepts](#4-understanding-ai-agents--core-concepts)
-5. [The CrewAI Framework — Architecture Deep Dive](#5-the-crewai-framework--architecture-deep-dive)
+4. [Understanding AI Agents : Core Concepts](#4-understanding-ai-agents--core-concepts)
+5. [The CrewAI Framework : Architecture Deep Dive](#5-the-crewai-framework--architecture-deep-dive)
 6. [System Requirements & Prerequisites](#6-system-requirements--prerequisites)
 7. [Step-by-Step Environment Setup](#7-step-by-step-environment-setup)
 8. [Generating Your API Keys](#8-generating-your-api-keys)
-9. [Module 1 — Manual Adversary Research (HAFNIUM)](#9-module-1--manual-adversary-research-hafnium)
-10. [Module 2 — TTP Extraction & MITRE ATT\&CK Mapping](#10-module-2--ttp-extraction--mitre-attck-mapping)
-11. [Module 3 — Building ATT\&CK Navigator Layers](#11-module-3--building-attck-navigator-layers)
-12. [Module 4 — Building Your First AI Agent Pipeline](#12-module-4--building-your-first-ai-agent-pipeline)
-13. [Module 5 — Multi-Agent Crew with Local PDF Reports](#13-module-5--multi-agent-crew-with-local-pdf-reports)
-14. [Module 6 — Live Intelligence Gathering with Web Search](#14-module-6--live-intelligence-gathering-with-web-search)
-15. [Validation & Critical Thinking — Spotting AI Hallucinations](#15-validation--critical-thinking--spotting-ai-hallucinations)
+9. [Module 1 : Manual Adversary Research (HAFNIUM)](#9-module-1--manual-adversary-research-hafnium)
+10. [Module 2 : TTP Extraction & MITRE ATT\&CK Mapping](#10-module-2--ttp-extraction--mitre-attck-mapping)
+11. [Module 3 : Building ATT\&CK Navigator Layers](#11-module-3--building-attck-navigator-layers)
+12. [Module 4 : Building Your First AI Agent Pipeline](#12-module-4--building-your-first-ai-agent-pipeline)
+13. [Module 5 : Multi-Agent Crew with Local PDF Reports](#13-module-5--multi-agent-crew-with-local-pdf-reports)
+14. [Module 6 : Live Intelligence Gathering with Web Search](#14-module-6--live-intelligence-gathering-with-web-search)
+15. [Validation & Critical Thinking : Spotting AI Hallucinations](#15-validation--critical-thinking--spotting-ai-hallucinations)
 16. [Challenges & Extension Tasks](#16-challenges--extension-tasks)
 17. [What Comes Next](#17-what-comes-next)
 18. [Quick Reference & Cheatsheet](#18-quick-reference--cheatsheet)
@@ -27,17 +27,16 @@
 
 ## 1. Course Introduction
 
-Threat intelligence is the backbone of effective adversary emulation. Yet the traditional workflow — reading through long reports, manually identifying TTPs, cross-referencing MITRE ATT&CK — is painfully slow. A single analyst might spend an entire day building an adversary profile that a well-designed AI pipeline can produce in under an hour.
+Threat intelligence is the backbone of effective adversary emulation. Yet the traditional workflow, reading through long reports, manually identifying TTPs, cross-referencing MITRE ATT&CK, is painfully slow. A single analyst might spend an entire day building an adversary profile that a well-designed AI pipeline can produce in under a minute.
 
 This course bridges both worlds. You will:
 
-- **Build by hand first.** Research HAFNIUM (the Chinese state-sponsored group behind ProxyLogon) the traditional way — reading real reports, extracting TTPs manually, creating an ATT&CK Navigator layer. This gives you the analytical foundation to evaluate AI output.
+- **Build by hand first.** Research HAFNIUM (the Chinese state-sponsored group behind ProxyLogon) the traditional way, reading real reports, extracting TTPs manually, creating an ATT&CK Navigator layer. This gives you the analytical foundation to evaluate AI output.
 - **Then automate it.** Design a multi-agent AI pipeline using CrewAI that reads the same reports and produces a structured adversary profile automatically.
 - **Then go live.** Extend your pipeline to pull fresh intelligence directly from the internet using an AI-integrated web search agent.
 
 By the end, you'll have a production-ready workflow that can be applied to any threat group, not just HAFNIUM.
 
-> ⚠️ **Instructor Note:** The manual exercises are not optional busywork. Students who skip them struggle to validate AI output. Enforce both tracks.
 
 ---
 
@@ -103,35 +102,33 @@ AI agents solve these problems with three key properties:
 Instead of one model doing everything, you assign distinct roles: one agent reads reports, another maps TTPs, another writes the final profile. Each agent is optimized for a narrow task.
 
 **2. Tool Use**  
-Agents can use real tools — file readers, web search APIs, code interpreters. They don't just think; they act.
+Agents can use real tools, file readers, web search APIs, code interpreters. They don't just think; they act.
 
 **3. Orchestration & Memory**  
-Multi-agent frameworks like CrewAI manage task sequencing, pass outputs between agents, and maintain shared state across a pipeline — something a chat interface can't do.
+Multi-agent frameworks like CrewAI manage task sequencing, pass outputs between agents, and maintain shared state across a pipeline, something a chat interface can't do.
 
 ```
 Traditional Approach:    Human → reads report → maps TTPs → writes profile
                          Time: 6-8 hours per actor
 
 AI Agent Approach:       Pipeline → reads reports → maps TTPs → writes profile
-                         Time: ~45 minutes per actor
+                         Time: ~5 minutes per actor
                          Human role: set direction + validate output
 ```
 
 ### The Right Mental Model
 
-AI agents are not a replacement for human expertise — they are a **force multiplier**. Your job shifts from doing the research to:
+AI agents are not a replacement for human expertise, they are a **force multiplier**. Your job shifts from doing the research to:
 - Designing the pipeline
 - Curating the inputs
 - Validating the output
 - Acting on the findings
 
-This course teaches all four.
-
 ---
 
 ## 4. Understanding AI Agents — Core Concepts
 
-Before writing any code, you need a clear mental model of how AI agents work. The following concepts apply across frameworks — not just CrewAI.
+Before writing any code, you need a clear mental model of how AI agents work. The following concepts apply across frameworks, not just CrewAI.
 
 ### What is an AI Agent?
 
