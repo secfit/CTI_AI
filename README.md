@@ -126,7 +126,7 @@ AI agents are not a replacement for human expertise, they are a **force multipli
 
 ---
 
-## 4. Understanding AI Agents — Core Concepts
+## 4. Understanding AI Agents, Core Concepts
 
 Before writing any code, you need a clear mental model of how AI agents work. The following concepts apply across frameworks, not just CrewAI.
 
@@ -263,9 +263,7 @@ The pipeline you will build in this course has three phases:
 
 ### Why Multiple Crews Instead of One?
 
-This is the question every student asks. Two technical reasons:
-
-**Context Window Overflow:** LLMs have token limits. Three research reports may total 30,000–60,000 tokens. Feeding all of them into a single agent context pushes the model to its limits — or beyond — where output quality degrades significantly.
+**Context Window Overflow:** LLMs have token limits. Three research reports may total 30,000–60,000 tokens. Feeding all of them into a single agent context pushes the model to its limits, or beyond where output quality degrades significantly.
 
 **Attention Dilution:** Even within token limits, attention quality drops as context grows. A model analyzing one focused document produces sharper extractions than the same model processing three documents simultaneously. Parallel crews with isolated contexts solve both problems.
 
