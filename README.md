@@ -319,11 +319,6 @@ If Python 3.10+ is not installed:
 sudo apt update && sudo apt install python3.11 python3.11-pip -y
 ```
 
-**macOS (with Homebrew):**
-```bash
-brew install python@3.11
-```
-
 ---
 
 ### Step 2 - Verify Internet Connectivity
@@ -342,7 +337,7 @@ Using a virtual environment isolates your project dependencies and prevents conf
 
 ```bash
 # Create the virtual environment
-python3 -m venv ~/workshop/venv
+python3.11 -m venv ~/workshop/venv
 
 # Activate it
 source ~/workshop/venv/bin/activate
@@ -363,6 +358,7 @@ With your virtual environment active:
 ```bash
 pip install --upgrade pip
 pip install 'crewai[tools]' pypdf tavily-python
+pip install pysqlite3-binary
 ```
 
 **What each package does:**
@@ -413,9 +409,9 @@ OR
 Download the PDF files directly into your directory.
 ```bash
 cd ~/workshop/threat-intel/
-wget https://github.com/secfit/CTI_AI/blob/main/Mandiant-Microsoft-Exchange-Zero-Days.pdf
-wget https://github.com/secfit/CTI_AI/blob/main/Microsoft-HAFNIUM-report.pdf
-wget https://github.com/secfit/CTI_AI/blob/main/Volexity-Operation-Exchange-Marauder.pdf
+wget https://raw.githubusercontent.com/secfit/CTI_AI/main/Mandiant-Microsoft-Exchange-Zero-Days.pdf
+wget https://raw.githubusercontent.com/secfit/CTI_AI/main/Microsoft-HAFNIUM-report.pdf
+wget https://raw.githubusercontent.com/secfit/CTI_AI/main/Volexity-Operation-Exchange-Marauder.pdf
 
 # Verify they landed correctly
 ls -lh ~/workshop/threat-intel/
@@ -784,6 +780,9 @@ nano test_crewai.py
 Paste this code:
 
 ```python
+import pysqlite3, sys
+sys.modules['sqlite3'] = pysqlite3
+
 import os
 from crewai import Agent, Task, Crew, LLM
 
@@ -856,7 +855,9 @@ nano ~/workshop/threatintel-crew/threatintel_flow.py
 ```
 
 ```python
-#!/usr/bin/env python3
+import pysqlite3, sys
+sys.modules['sqlite3'] = pysqlite3
+
 """
 Threat Intelligence Multi-Agent Pipeline
 =========================================
@@ -980,7 +981,7 @@ def build_pdf_crew(pdf_path: str, llm) -> Crew:
         Include the ATT&CK ID (e.g., T1190), technique name, and tactic.""",
         expected_output="""A structured summary with:
         - Threat group context (1-2 sentences)
-        - TTP list: each item with [ATT&CK ID] Technique Name — Tactic — Evidence quote
+        - TTP list: each item with [ATT&CK ID] Technique Name Tactic Evidence quote
         - Tools and malware observed
         - IoCs (hashes, IPs, domains if present)""",
         agent=analyst
@@ -1150,7 +1151,9 @@ nano ~/workshop/threatintel-crew/threatintel_web.py
 ```
 
 ```python
-#!/usr/bin/env python3
+import pysqlite3, sys
+sys.modules['sqlite3'] = pysqlite3
+
 """
 Live Threat Intelligence Gathering via Web Search
 ==================================================
@@ -1268,9 +1271,15 @@ if __name__ == "__main__":
     print(f"\n🌐 Starting live intelligence gathering for {THREAT_ACTOR}...\n")
     result = crew.kickoff()
     
-    output_path = f"/home/{os.getenv('USER', 'user')}/workshop/{THREAT_ACTOR.lower()}_live_profile.md"
-    with open(output_path, "w") as f:
-        f.write(str(result))
+home_dir = os.path.expanduser("~")  # gets correct home (/root)
+output_path = os.path.join(
+    home_dir,
+    "workshop",
+    f"{THREAT_ACTOR.lower()}_live_profile.md"
+)
+os.makedirs(os.path.dirname(output_path), exist_ok=True)
+with open(output_path, "w") as f:
+    f.write(str(result))
     
     print(f"\n✅ Live profile saved to: {output_path}")
 ```
