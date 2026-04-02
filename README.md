@@ -1408,21 +1408,5 @@ T1XXX.XXX       ← Sub-technique (e.g., T1059.001 — PowerShell)
 
 ---
 
-## 📎 Appendix: File Structure Reference
-
-```
-~/workshop/
-├── venv/                          # Python virtual environment
-├── threat-intel/                  # PDF reports for analysis
-│   ├── Microsoft-HAFNIUM-report.pdf
-│   ├── Mandiant-Microsoft-Exchange-Zero-Days.pdf
-│   └── Volexity-Operation-Exchange-Marauder.pdf
-├── threatintel-crew/              # Python scripts
-│   ├── test_crewai.py             # Installation verification
-│   ├── threatintel_flow.py        # Full PDF pipeline (Module 5)
-│   └── threatintel_web.py         # Web search pipeline (Module 6)
-├── hafnium_threat_profile.md      # Output: PDF pipeline result
-└── hafnium_live_profile.md        # Output: Web search result
-```
 
 ---
