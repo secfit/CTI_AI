@@ -691,7 +691,6 @@ CROSS-REPORT TTP CONFIDENCE TABLE
 
 ## 11. Module 3 - Building ATT&CK Navigator Layers
 
-**Duration:** ~20 minutes  
 **Goal:** Visualize HAFNIUM's TTP coverage using ATT&CK Navigator
 
 ### What is ATT&CK Navigator?
@@ -843,7 +842,6 @@ python3 test_crewai.py
 
 ## 13. Module 5 - Multi-Agent Crew with Local PDF Reports
 
-**Duration:** ~30 minutes  
 **Goal:** Build the full 3-phase pipeline that reads PDFs and produces an adversary profile
 
 ### The Full Pipeline Code
