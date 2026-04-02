@@ -186,7 +186,7 @@ The model alternates between reasoning and acting until it completes the task.
 
 ---
 
-## 5. The CrewAI Framework — Architecture Deep Dive
+## 5. The CrewAI Framework - Architecture Deep Dive
 
 ### What is CrewAI?
 
@@ -244,7 +244,7 @@ The pipeline you will build in this course has three phases:
 └─────────────────────────────────────────────────────────────────┘
 ```
 
-### Shared State — How Data Flows
+### Shared State - How Data Flows
 
 ```
 ┌──────────────────────────────────────────────────────┐
@@ -281,8 +281,6 @@ The pipeline you will build in this course has three phases:
 | Python | 3.10 | 3.11 or 3.12 |
 | Network | Required | Stable broadband |
 
-> 💡 **Windows Users:** Use WSL2 with Ubuntu 22.04. Native Windows Python environments may have path issues with some CrewAI dependencies.
-
 ### Knowledge Prerequisites
 
 Students should be comfortable with:
@@ -303,7 +301,7 @@ Students should be comfortable with:
 
 ## 7. Step-by-Step Environment Setup
 
-### Step 1 — Verify Python Version
+### Step 1 - Verify Python Version
 
 ```bash
 python3 --version
@@ -326,24 +324,19 @@ sudo apt update && sudo apt install python3.11 python3.11-pip -y
 brew install python@3.11
 ```
 
-**Windows WSL2:**
+---
+
+### Step 2 - Verify Internet Connectivity
+
 ```bash
-sudo apt update && sudo apt install python3.11 python3-pip -y
+ping -c 4 8.8.8.8
 ```
+
+You should see response times. If not, resolve your network configuration before proceeding, the pipeline needs access to LLM APIs and optionally web search.
 
 ---
 
-### Step 2 — Verify Internet Connectivity
-
-```bash
-ping -c 4 sans.org
-```
-
-You should see response times. If not, resolve your network configuration before proceeding — the pipeline needs access to LLM APIs and optionally web search.
-
----
-
-### Step 3 — Create a Virtual Environment (Recommended)
+### Step 3 - Create a Virtual Environment (Recommended)
 
 Using a virtual environment isolates your project dependencies and prevents conflicts with system packages:
 
@@ -363,7 +356,7 @@ which python3
 
 ---
 
-### Step 4 — Install Python Dependencies
+### Step 4 - Install Python Dependencies
 
 With your virtual environment active:
 
@@ -382,7 +375,7 @@ pip install 'crewai[tools]' pypdf tavily-python
 
 ---
 
-### Step 5 — Set Up Working Directories
+### Step 5 - Set Up Working Directories
 
 ```bash
 mkdir -p ~/workshop/threat-intel     # Store PDF reports here
@@ -392,7 +385,7 @@ cd ~/workshop
 
 ---
 
-### Step 6 — Gather the HAFNIUM Reports (PDF Format)
+### Step 6 - Gather the HAFNIUM Reports (PDF Format)
 
 You will analyze three real public reports on the HAFNIUM threat group.
 
@@ -400,7 +393,7 @@ Open each URL in your browser and save the page as PDF (`File → Print → Save
 
 | Report | URL | Save As |
 |--------|-----|---------|
-| Microsoft HAFNIUM Report | https://www.microsoft.com/security/blog/2021/03/02/hafnium-targeting-exchange-servers/ | `Microsoft-HAFNIUM-report.pdf` |
+| Microsoft HAFNIUM Report | https://www.microsoft.com/en-us/security/blog/2021/03/02/hafnium-targeting-exchange-servers/ | `Microsoft-HAFNIUM-report.pdf` |
 | Mandiant Exchange Zero-Days | https://www.mandiant.com/resources/detection-response-to-exploitation-of-microsoft-exchange-zero-day-vulnerabilities | `Mandiant-Microsoft-Exchange-Zero-Days.pdf` |
 | Volexity Operation Exchange Marauder | https://www.volexity.com/blog/2021/03/02/active-exploitation-of-microsoft-exchange-zero-day-vulnerabilities/ | `Volexity-Operation-Exchange-Marauder.pdf` |
 
@@ -415,6 +408,18 @@ mv ~/Downloads/Volexity-Operation-Exchange-Marauder.pdf ~/workshop/threat-intel/
 ls -lh ~/workshop/threat-intel/
 ```
 
+OR
+
+Download the PDF files directly into your directory.
+```bash
+cd ~/workshop/threat-intel/
+wget https://github.com/secfit/CTI_AI/blob/main/Mandiant-Microsoft-Exchange-Zero-Days.pdf
+wget https://github.com/secfit/CTI_AI/blob/main/Microsoft-HAFNIUM-report.pdf
+wget https://github.com/secfit/CTI_AI/blob/main/Volexity-Operation-Exchange-Marauder.pdf
+
+# Verify they landed correctly
+ls -lh ~/workshop/threat-intel/
+```
 ---
 
 ### Step 7 — Verify Everything Works
@@ -487,7 +492,7 @@ Check the [CrewAI releases](https://github.com/crewAIInc/crewAI/releases) for th
 
 You need one LLM provider. Pick the one that fits your situation.
 
-### Option A — OpenAI API Key (GPT-4o)
+### Option A - OpenAI API Key (GPT-4o)
 
 1. Go to [https://platform.openai.com](https://platform.openai.com)
 2. Create an account or sign in
@@ -504,7 +509,7 @@ export OPENAI_API_KEY="sk-proj-xxxxxxxxxxxxxxxxxxxxxxxxxxxx"
 
 ---
 
-### Option B — Anthropic API Key (Claude)
+### Option B - Anthropic API Key (Claude)
 
 1. Go to [https://console.anthropic.com](https://console.anthropic.com)
 2. Create an account and verify your email
@@ -517,7 +522,7 @@ export ANTHROPIC_API_KEY="sk-ant-api03-xxxxxxxxxxxxxxxxxxxxxxxxxxxx"
 
 ---
 
-### Option C — Groq API Key (Free Tier Available)
+### Option C - Groq API Key
 
 Groq offers a **free tier** with fast inference — a great option for students:
 
@@ -534,7 +539,7 @@ export GROQ_API_KEY="gsk_xxxxxxxxxxxxxxxxxxxxxxxxxxxx"
 
 ---
 
-### Option D — Google Gemini API Key (Free Tier Available)
+### Option D - Google Gemini API Key (Free Tier Available)
 
 1. Go to [https://aistudio.google.com](https://aistudio.google.com)
 2. Sign in with your Google account
@@ -593,28 +598,21 @@ echo 'export TAVILY_API_KEY="your-key-here"' >> ~/.bashrc
 source ~/.bashrc
 ```
 
-For `zsh` (macOS default):
-```bash
-echo 'export OPENAI_API_KEY="your-key-here"' >> ~/.zshrc
-source ~/.zshrc
-```
-
 > 🔐 **Security Note:** Never commit API keys to a GitHub repository. Add `.env` files to your `.gitignore`. Consider using `python-dotenv` for local key management in production workflows.
 
 ---
 
 ## 9. Module 1 — Manual Adversary Research (HAFNIUM)
 
-**Duration:** ~25 minutes  
 **Goal:** Build a baseline adversary profile for HAFNIUM by hand
 
 ### Background: Who is HAFNIUM?
 
-HAFNIUM is a Chinese state-sponsored threat actor attributed to China's civilian intelligence agency (MSS). They are best known for exploiting four zero-day vulnerabilities in Microsoft Exchange Server in early 2021 (CVE-2021-26855, 26857, 26858, 27065) — collectively dubbed **ProxyLogon**.
+HAFNIUM is a Chinese state-sponsored threat actor attributed to China's civilian intelligence agency (MSS). They are best known for exploiting four zero-day vulnerabilities in Microsoft Exchange Server in early 2021 (CVE-2021-26855, 26857, 26858, 27065) collectively dubbed **ProxyLogon**.
 
 Sectors targeted include: defense contractors, law firms, NGOs, infectious disease researchers, higher education institutions.
 
-### Exercise 1.1 — Research the Adversary
+### Exercise 1.1 - Research the Adversary
 
 Using your browser, research HAFNIUM using the three reports downloaded during setup plus MITRE ATT&CK. Fill in the following profile template:
 
@@ -635,17 +633,16 @@ ATT&CK Group Page:       https://attack.mitre.org/groups/G0125/
 ```
 
 **Reference Resources:**
-- [MITRE ATT&CK — HAFNIUM (G0125)](https://attack.mitre.org/groups/G0125/)
-- [Microsoft HAFNIUM Blog Post](https://www.microsoft.com/security/blog/2021/03/02/hafnium-targeting-exchange-servers/)
+- [MITRE ATT&CK  HAFNIUM (G0125)](https://attack.mitre.org/groups/G0125/)
+- [Microsoft HAFNIUM Blog Post](https://www.microsoft.com/en-us/security/blog/2021/03/02/hafnium-targeting-exchange-servers/)
 - [CISA Advisory AA21-062A](https://www.cisa.gov/news-events/cybersecurity-advisories/aa21-062a)
 
 > ✅ **Checkpoint:** Before moving on, confirm you can answer: What was HAFNIUM's primary initial access vector? What was their objective after gaining access?
 
 ---
 
-## 10. Module 2 — TTP Extraction & MITRE ATT&CK Mapping
-
-**Duration:** ~25 minutes  
+## 10. Module 2  TTP Extraction & MITRE ATT&CK Mapping
+  
 **Goal:** Extract TTPs from real reports and map them to ATT&CK
 
 ### What is a TTP?
@@ -659,7 +656,7 @@ ATT&CK Group Page:       https://attack.mitre.org/groups/G0125/
 | **Sub-technique** | A more specific variation | `T1059.001 — PowerShell` |
 | **Procedure** | The exact implementation | "HAFNIUM used the China Chopper webshell deployed to `C:\inetpub\wwwroot\`" |
 
-### Exercise 2.1 — Read and Extract
+### Exercise 2.1 - Read and Extract
 
 Open the **Microsoft HAFNIUM report** and complete the extraction table:
 
@@ -679,7 +676,7 @@ TTP EXTRACTION TABLE
 
 **ATT&CK Lookup Resource:** [https://attack.mitre.org/techniques/enterprise/](https://attack.mitre.org/techniques/enterprise/)
 
-### Exercise 2.2 — Cross-Report Validation
+### Exercise 2.2 - Cross-Report Validation
 
 Repeat the extraction for the **Mandiant** and **Volexity** reports. Note any TTPs that appear across all three reports — these are the highest-confidence behaviors to include in an emulation plan.
 
@@ -694,11 +691,9 @@ CROSS-REPORT TTP CONFIDENCE TABLE
 | ...       | ...            |      |          |          |            |
 ```
 
-> 📌 **Instructor Debrief:** After this exercise, compare student extractions. Common errors include: technique-procedure confusion (writing procedures as techniques), incorrect tactic classification, and misidentifying sub-techniques. Use these errors to motivate AI-assisted extraction.
-
 ---
 
-## 11. Module 3 — Building ATT&CK Navigator Layers
+## 11. Module 3 - Building ATT&CK Navigator Layers
 
 **Duration:** ~20 minutes  
 **Goal:** Visualize HAFNIUM's TTP coverage using ATT&CK Navigator
@@ -707,7 +702,7 @@ CROSS-REPORT TTP CONFIDENCE TABLE
 
 [ATT&CK Navigator](https://mitre-attack.github.io/attack-navigator/) is a web-based tool for annotating and visualizing the MITRE ATT&CK matrix. Red teams use it to show adversary coverage; blue teams use it to map defensive gaps.
 
-### Exercise 3.1 — Create Your Layer
+### Exercise 3.1 - Create Your Layer
 
 1. Go to [https://mitre-attack.github.io/attack-navigator/](https://mitre-attack.github.io/attack-navigator/)
 2. Click **"Create New Layer"** → **"Enterprise ATT&CK"**
@@ -722,7 +717,7 @@ CROSS-REPORT TTP CONFIDENCE TABLE
 2. Select **"Download Layer"** (JSON format)
 3. Save as `hafnium-layer.json`
 
-### Exercise 3.3 — Compare Against the AI Output
+### Exercise 3.3 - Compare Against the AI Output
 
 Later in Module 5, the AI will produce its own ATT&CK layer. You will compare:
 - Which techniques did both you and the AI find?
@@ -733,9 +728,8 @@ This comparison is the core learning outcome of the course.
 
 ---
 
-## 12. Module 4 — Building Your First AI Agent Pipeline
+## 12. Module 4 - Building Your First AI Agent Pipeline
 
-**Duration:** ~20 minutes  
 **Goal:** Understand CrewAI's building blocks and verify your installation
 
 ### CrewAI Building Blocks in Practice
@@ -848,7 +842,7 @@ python3 test_crewai.py
 
 ---
 
-## 13. Module 5 — Multi-Agent Crew with Local PDF Reports
+## 13. Module 5 - Multi-Agent Crew with Local PDF Reports
 
 **Duration:** ~30 minutes  
 **Goal:** Build the full 3-phase pipeline that reads PDFs and produces an adversary profile
@@ -1136,9 +1130,8 @@ cat ~/workshop/hafnium_threat_profile.md
 
 ---
 
-## 14. Module 6 — Live Intelligence Gathering with Web Search
+## 14. Module 6 - Live Intelligence Gathering with Web Search
 
-**Duration:** ~25 minutes  
 **Prerequisites:** Tavily API key set as `TAVILY_API_KEY`
 
 ### Why Web Search Changes Everything
@@ -1304,7 +1297,7 @@ python3 threatintel_web.py
 
 ---
 
-## 15. Validation & Critical Thinking — Spotting AI Hallucinations
+## 15. Validation & Critical Thinking - Spotting AI Hallucinations
 
 This is the most important module in the course. AI-generated threat profiles can be wrong in ways that are hard to spot without domain expertise.
 
@@ -1333,77 +1326,14 @@ For every AI-generated adversary profile, verify:
 □ No fictional sub-techniques (check the parent technique page)
 ```
 
-### Exercise 15.1 — Find the Errors
-
-The following is an intentionally flawed AI output. Find at least 3 errors:
-
-```markdown
-## HAFNIUM TTP Table (FIND THE ERRORS)
-
-| ATT&CK ID | Technique | Tactic | Evidence |
-|-----------|-----------|--------|---------|
-| T1190     | Exploit Public-Facing Application | Initial Access | CVE-2021-26855 |
-| T1055.003 | Process Injection: Thread Execution Hijacking | Defense Evasion | Used to avoid AV detection |
-| T1059.003 | Command and Scripting Interpreter: Windows Command Shell | Execution | cmd.exe usage |
-| T1087     | Account Discovery | Discovery | Ran net user /domain |
-| T1048.002 | Exfiltration Over Asymmetric Encrypted Non-C2 Protocol | Exfiltration | Exfiltrated via MEGA |
-| T1021.006 | Remote Services: Windows Remote Management | Lateral Movement | Used WINRM |
-| T1003.001 | OS Credential Dumping: LSASS Memory | Credential Access | Used ProcDump |
-| T1567.002 | Exfiltration Over Web Service: Exfiltration to Code Repository | Exfiltration | Used GitHub to exfiltrate |
-```
-
-> *(Answer key available in the instructor guide. Errors include a tactic mismatch, a technique that doesn't match HAFNIUM's documented behavior, and a sub-technique attribution error.)*
-
 ---
 
-## 16. Challenges & Extension Tasks
 
-For students who complete the core exercises early:
-
-### Challenge 1 — New Threat Actor (Hard)
-Profile a different threat group using the same pipeline. Suggested actors: APT29 (Cozy Bear), Lazarus Group, APT41. Compare the profile quality to publicly available ATT&CK group pages.
-
-### Challenge 2 — Custom Agent Roles (Medium)
-Add a fourth agent to the synthesis crew: a **Detection Engineer** who, for each high-confidence TTP, suggests a Sigma rule or SIEM query. Consider what data sources the detection would require.
-
-### Challenge 3 — Multi-Format Output (Medium)
-Modify the Report Writer agent to produce output in two formats simultaneously: a Markdown narrative report AND a JSON-formatted ATT&CK Navigator layer file.
-
-### Challenge 4 — Scheduled Intelligence Feed (Hard)
-Wrap the web search pipeline in a cron job or scheduled task that runs weekly, appends new findings to a running intelligence file, and only reports on TTPs that are new since the last run.
-
-### Challenge 5 — Hallucination Detection Agent (Hard)
-Add a **Validation Agent** that takes the final report and verifies each ATT&CK technique ID against the live MITRE ATT&CK STIX data feed. Flag any IDs that don't exist or don't match the described behavior.
-
----
-
-## 17. What Comes Next
-
-This course covered the **intelligence consumption phase** of adversary emulation. The full lifecycle:
-
-```
-Phase 1: Intelligence Collection & Analysis     ← This course
-         ↓
-Phase 2: Emulation Plan Development
-         (Translate TTPs to red team actions)
-         ↓
-Phase 3: Infrastructure Preparation
-         (C2 setup, tool development, staging)
-         ↓
-Phase 4: Operation Execution
-         (Phased execution with operator logs)
-         ↓
-Phase 5: Reporting & Purple Team Review
-         (Compare actions to detections)
-```
 
 ### Recommended Next Steps
 
 | Resource | Focus |
 |----------|-------|
-| [SANS SEC565](https://www.sans.org/cyber-security-courses/red-team-operations-adversary-emulation/) | Full adversary emulation lifecycle (6 days) |
-| [MITRE CALDERA](https://caldera.mitre.org/) | Automated adversary emulation platform |
-| [Atomic Red Team](https://github.com/redcanaryco/atomic-red-team) | Technique-level emulation tests |
 | [CrewAI Documentation](https://docs.crewai.com) | Framework reference |
 | [MITRE ATT&CK](https://attack.mitre.org) | Framework reference |
 | [CISA Advisories](https://www.cisa.gov/news-events/cybersecurity-advisories) | High-quality free threat reports |
@@ -1489,9 +1419,3 @@ T1XXX.XXX       ← Sub-technique (e.g., T1059.001 — PowerShell)
 ```
 
 ---
-
-*Course developed for Cyber Threat Intelligence (CTI) instruction. All threat actor references are drawn from publicly available, vendor-published research. Intended for authorized educational and defensive security purposes only.*
-
----
-
-> 🔗 **Course Repository:** Fork this file and track your progress. Each module's output files can be committed to your own repo as evidence of completion.
