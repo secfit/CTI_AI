@@ -421,7 +421,7 @@ ls -lh ~/workshop/threat-intel/
 ### Step 7 — Verify Everything Works
 
 ```bash
-python3 -c "import crewai; import pypdf; print('✅ All imports successful')"
+python3 -c "import crewai; import pypdf; print(' All imports successful')"
 ```
 
 **Expected output:**
@@ -501,7 +501,7 @@ You need one LLM provider. Pick the one that fits your situation.
 export OPENAI_API_KEY="sk-proj-xxxxxxxxxxxxxxxxxxxxxxxxxxxx"
 ```
 
-> 💰 **Cost estimate:** This workshop uses ~50,000–100,000 tokens. At GPT-4o pricing, expect under $1 USD for the full workshop.
+>  **Cost estimate:** This workshop uses ~50,000–100,000 tokens. At GPT-4o pricing, expect under $1 USD for the full workshop.
 
 ---
 
@@ -767,7 +767,7 @@ result = crew.kickoff()
 print(result)
 ```
 
-### Exercise 4.1 — Verify Your Installation
+### Exercise 4.1 - Verify Your Installation
 
 Create the following file:
 
@@ -820,7 +820,7 @@ task = Task(
 
 crew = Crew(agents=[agent], tasks=[task], verbose=True)
 result = crew.kickoff()
-print(f"\n✅ Result: {result}")
+print(f"\n Result: {result}")
 ```
 
 Run it:
@@ -1073,12 +1073,12 @@ class ThreatIntelFlow(Flow[ThreatIntelState]):
              for i, (path, summary) in enumerate(zip(self.state.pdf_paths, summaries))]
         )
         
-        print(f"✅ Phase 2 complete. Processed {len(summaries)} reports.")
+        print(f" Phase 2 complete. Processed {len(summaries)} reports.")
 
     @listen(read_pdfs_parallel)
     def analyze_and_map(self):
         """Phase 3: Synthesize all summaries into a final threat profile."""
-        print("\n🧠 Phase 3: Synthesizing threat profile...")
+        print("\n Phase 3: Synthesizing threat profile...")
         
         crew = build_synthesis_crew(self.state.combined_summaries, self.llm)
         result = crew.kickoff()
@@ -1087,7 +1087,7 @@ class ThreatIntelFlow(Flow[ThreatIntelState]):
         
         # Save to file
         OUTPUT_FILE.write_text(self.state.final_report, encoding="utf-8")
-        print(f"\n✅ Threat profile saved to: {OUTPUT_FILE}")
+        print(f"\n Threat profile saved to: {OUTPUT_FILE}")
         print("\n" + "="*60)
         print(self.state.final_report[:2000] + "...")
         print("="*60)
@@ -1279,7 +1279,7 @@ os.makedirs(os.path.dirname(output_path), exist_ok=True)
 with open(output_path, "w") as f:
     f.write(str(result))
     
-    print(f"\n✅ Live profile saved to: {output_path}")
+    print(f"\n Live profile saved to: {output_path}")
 ```
 
 ### Running the Web Search Pipeline
