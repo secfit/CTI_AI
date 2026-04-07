@@ -13,7 +13,7 @@ Before starting, make sure the following are available on your system:
 - Access to the working directory: `~/workshop/threat-intel/`
 - Python scripts available:
   - `threatintel_flow.py`
-  - `threatintel_ioc.py`
+  - `threatintel_flow_IOC.py`
 - Access to your lab's **MISP instance** (credentials provided by instructor)
 - Tools: `wget` or `curl`, `python3.10` or `python3.11`
 
@@ -131,7 +131,7 @@ Run the IOC extraction script on the same PDF files:
 
 ```bash
 cd ~/workshop/threat-intel/
-python3 threatintel_ioc.py
+python3 threatintel_flow_IOC.py
 ```
 
 This script will extract the following types of IOCs from the reports:
@@ -196,5 +196,3 @@ Log in to your lab's **MISP instance** and follow these steps:
 - In MISP, always double-check the **attribute type** — using the wrong type (e.g., `ip-src` instead of `ip-dst`) affects detection rules.
 
 ---
-
-*Exercise prepared for educational purposes — Threat Intelligence Lab*
